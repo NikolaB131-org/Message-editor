@@ -1,7 +1,7 @@
-function App() {
+import { Main } from "./Main";
+
+export function App() {
   return (
-    <p>Привет</p>
+    <Main />
   );
 }
-
-export default App;
