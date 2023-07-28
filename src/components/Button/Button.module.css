@@ -2,12 +2,14 @@
   cursor: pointer;
 
   display: flex;
-  gap: 10px;
+  gap: 8px;
   align-items: center;
   justify-content: center;
 
+  padding: 14px 35px;
+
   background-color: var(--accent-color-1);
-  border-radius: 10px;
+  border-radius: 12px;
 
   transition: all 0.2s linear;
 }
@@ -17,6 +19,7 @@
 }
 
 .text {
+  font-weight: 500;
   color: var(--font-color);
 }
 

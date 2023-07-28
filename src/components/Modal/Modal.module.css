@@ -1,0 +1,28 @@
+.container {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  display: flex;
+
+  width: 100vw;
+  height: 100vh;
+
+  background-color: rgba(0, 0, 0, 0.2);
+
+  animation: appear 0.15s linear;
+}
+
+@keyframes appear {
+  0% { opacity: 0 }
+}
+
+.content {
+  overflow: hidden;
+
+  margin: auto;
+
+  background-color: white;
+  border: 3px solid var(--border-color);
+  border-radius: 10px;
+}
