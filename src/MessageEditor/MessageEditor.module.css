@@ -1,0 +1,40 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.header {
+  flex: 0 1 auto; /* to prevent header scrolling with content */
+  padding: var(--padding);
+}
+
+.header_title {
+  margin-bottom: 8px;
+  font-size: 1.25rem;
+  text-align: center;
+}
+
+.header_content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.variables_title {
+  margin-bottom: 10px;
+}
+
+.content {
+  overflow-y: auto;
+  flex: 1 1 auto;
+  padding: 0 var(--padding);
+}
+
+.footer {
+  display: flex;
+  flex: 0 1 auto; /* to prevent footer scrolling with content */
+  gap: 20px;
+  justify-content: center;
+
+  padding: var(--padding);
+}

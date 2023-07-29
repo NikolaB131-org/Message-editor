@@ -6,6 +6,8 @@
   align-items: center;
   justify-content: center;
 
+  width: fit-content;
+  height: fit-content;
   padding: 14px 35px;
 
   background-color: var(--accent-color-1);
@@ -19,6 +21,7 @@
 }
 
 .text {
+  width: max-content;
   font-weight: 500;
   color: var(--font-color);
 }

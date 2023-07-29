@@ -10,10 +10,10 @@
 
   background-color: rgba(0, 0, 0, 0.2);
 
-  animation: appear 0.15s linear;
+  animation: appear1 0.15s linear;
 }
 
-@keyframes appear {
+@keyframes appear1 {
   0% { opacity: 0 }
 }
 
@@ -25,4 +25,10 @@
   background-color: white;
   border: 3px solid var(--border-color);
   border-radius: 10px;
+
+  animation: appear2 0.15s linear;
+}
+
+@keyframes appear2 {
+  0% { transform: translateY(4vh) }
 }

@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.variable {
+  cursor: pointer;
+  user-select: none;
+
+  padding: 10px;
+
+  font-weight: 500;
+  color: var(--accent-color-1);
+
+  border-radius: 100px;
+  outline: 2px solid var(--accent-color-1);
+
+  transition: background-color 0.3s;
+}
+
+.variable:hover {
+  background-color: var(--selected-color);
+  outline-width: 3px;
+}
