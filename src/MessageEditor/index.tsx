@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { VariablesList } from './components/VariablesList';
 import { Button } from '../components/Button';
+import { Textarea } from '../components/Textarea';
 import { Modal } from '../components/Modal';
 import blockSchemeSvg from '../assets/block-scheme.svg';
 import previewSvg from '../assets/preview.svg';
@@ -18,10 +19,6 @@ type Props = {
 export function MessageEditor({ setIsVisible, arrVarNames, template, callbackSave }: Props) {
   const [isMessagePreviewVisible, setIsMessagePreviewVisible] = useState(false);
 
-  const onVariableClick = (variable: string) => {
-    console.log(variable);
-  }
-
   const onIfThenElseClick = () => {
     console.log('if then else');
   }
@@ -34,12 +31,13 @@ export function MessageEditor({ setIsVisible, arrVarNames, template, callbackSav
           <div className={styles.header_content}>
             <div>
               <h3 className={styles.variables_title}>Variables</h3>
-              <VariablesList variablesArr={arrVarNames} onVariableClick={onVariableClick} />
+              <VariablesList variablesArr={arrVarNames} />
             </div>
             <Button imgSrc={blockSchemeSvg} text='IF | THEN | ELSE' onClick={() => onIfThenElseClick()} />
           </div>
         </header>
         <div className={styles.content}>
+          <Textarea placeholder='placeholder...'/>
         </div>
         <footer className={styles.footer}>
           <Button imgSrc={previewSvg} text='Preview' onClick={() => setIsMessagePreviewVisible(true)} />
