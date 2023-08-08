@@ -2,6 +2,7 @@ import { BlockPart, BlockType } from '../../../hooks/useSectionsTree';
 import { useContext, useRef, useEffect } from 'react';
 import { SectionIdContext } from '../IfThenElseSection';
 import { SectionsTreeContext } from '../..';
+import { useTextareaAutoResize } from '../../../hooks/useTextareaAutoResize';
 import styles from './Textarea.module.css';
 
 type Props = {
@@ -22,6 +23,8 @@ export function Textarea({
   const { getCurrentSectionId } = useContext(SectionIdContext);
   const { setText, setSelectedTextareaData } = useContext(SectionsTreeContext);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useTextareaAutoResize(textareaRef, value);
 
   const onChange = () => {
     const textarea = textareaRef.current;
@@ -44,22 +47,12 @@ export function Textarea({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    const textarea = textareaRef.current;
-    if (textarea) {
-      // Auto resize when value changes
-      textarea.style.height = '0';
-      textarea.style.height = textarea.scrollHeight + 'px'
-    }
-  }, [value]);
-
   return (
     <textarea
       className={`${styles.textarea} ${className}`}
       ref={textareaRef}
       onChange={onChange}
       onSelect={onSelect}
-      rows={1}
       value={value}
       placeholder={placeholder}
     ></textarea>
