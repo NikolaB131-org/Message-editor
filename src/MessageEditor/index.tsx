@@ -2,7 +2,7 @@ import { useSectionsTree, Template, BlockType, BlockPart } from '../hooks/useSec
 import { createContext, useState } from 'react';
 import { VariablesList } from './components/VariablesList';
 import { Button } from '../components/Button';
-import { Textarea } from '../components/Textarea';
+import { Textarea } from './components/Textarea';
 import { IfThenElseSection } from './components/IfThenElseSection';
 import { Modal } from '../components/Modal';
 import blockSchemeSvg from '../assets/block-scheme.svg';

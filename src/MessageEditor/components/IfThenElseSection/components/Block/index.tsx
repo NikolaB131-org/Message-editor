@@ -1,5 +1,5 @@
 import { BlockType, BlockNode, BlockPart } from '../../../../../hooks/useSectionsTree';
-import { Textarea } from '../../../../../components/Textarea';
+import { Textarea } from '../../../Textarea';
 import { IfThenElseSection } from '../..';
 import styles from './Block.module.css';
 

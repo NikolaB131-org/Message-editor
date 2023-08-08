@@ -1,7 +1,7 @@
-import { BlockPart, BlockType } from '../../hooks/useSectionsTree';
+import { BlockPart, BlockType } from '../../../hooks/useSectionsTree';
 import { useContext, useRef, useEffect } from 'react';
-import { SectionIdContext } from '../../MessageEditor/components/IfThenElseSection';
-import { SectionsTreeContext } from '../../MessageEditor';
+import { SectionIdContext } from '../IfThenElseSection';
+import { SectionsTreeContext } from '../..';
 import styles from './Textarea.module.css';
 
 type Props = {
