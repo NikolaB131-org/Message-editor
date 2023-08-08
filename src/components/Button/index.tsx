@@ -1,17 +1,30 @@
+import React from 'react';
 import styles from './Button.module.css';
 
 type Props = {
-  className?: string,
-  imgSrc?: string,
-  text: string,
-  onClick: () => void,
+  key?: number;
+  children?: React.ReactNode;
+  className?: string;
+  text?: string;
+  imgSrc?: string;
+  onClick?: () => void;
+  onMouseDown?: () => void;
 };
 
-export function Button({ className, imgSrc, text, onClick }: Props) {
+export function Button({ key, children, className = '', text, imgSrc, onClick, onMouseDown }: Props) {
+  const onMouseDownEvent = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    event.preventDefault();  // prevents loss of focus from textarea when button clicked
+    if (onMouseDown) onMouseDown();
+  }
+
   return (
-    <button className={`${styles.container} ${className}`} onClick={onClick}>
-      <img className={styles.img} src={imgSrc} alt="" />
-      <span className={styles.text}>{text}</span>
+    <button key={key} className={`${styles.container} ${className}`} onClick={onClick} onMouseDown={onMouseDownEvent}>
+      {children ? children : (
+        <>
+          <img className={styles.img} src={imgSrc} alt="" />
+          <span className={styles.text}>{text}</span>
+        </>
+      )}
     </button>
   );
 }

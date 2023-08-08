@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Button } from '../components/Button';
 import { Modal } from '../components/Modal';
 import { MessageEditor } from '../MessageEditor';
+import { Template } from '../hooks/useSectionsTree';
 import editorSvg from '../assets/editor.svg';
 import styles from './Main.module.css';
 
@@ -15,17 +16,18 @@ export function Main() {
     JSON.parse(editorArrVarNamesSaved) :
     ['firstname', 'lastname', 'company', 'position']
   );
-  const editorTemplate: string = editorTemplateSaved ? JSON.parse(editorTemplateSaved) : null;
+  const editorTemplate: Template | null = editorTemplateSaved ? JSON.parse(editorTemplateSaved) : null;
 
-  const editorCallbackSave = (template: string) => {
+  const editorCallbackSave = async (template: string) => {
     localStorage.setItem('template', template);
+    return true;
   };
 
   return (
     <>
       <div className={styles.container}>
         <div className={styles.content}>
-          <Button imgSrc={editorSvg} text='Message editor' onClick={() => setIsEditorVisible(true)} />
+          <Button text='Message editor' imgSrc={editorSvg} onClick={() => setIsEditorVisible(true)} />
         </div>
       </div>
       <Modal width='80vw' height='90vh' isVisible={isEditorVisible} setIsVisible={setIsEditorVisible}>

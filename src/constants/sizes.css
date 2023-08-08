@@ -1,3 +1,5 @@
 :root {
   --padding: 16px;
+
+  --gap-between-textareas: 16px;
 }

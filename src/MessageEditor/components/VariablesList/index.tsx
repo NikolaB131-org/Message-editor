@@ -1,44 +1,50 @@
+import { BlockPart, RootSection } from '../../../hooks/useSectionsTree';
+import { Button } from '../../../components/Button';
 import styles from './VariablesList.module.css';
 
 type Props = {
-  variablesArr: string[],
+  variablesArr: string[];
+  setRootSection: React.Dispatch<React.SetStateAction<RootSection>>;
+  selectedTextarea?: HTMLTextAreaElement;
 };
 
-export function VariablesList({ variablesArr }: Props) {
-  const getFormattedVariable = (variable: string) => `{${variable}}`;
+export function VariablesList({ variablesArr, setRootSection, selectedTextarea }: Props) {
+  const onVariableClick = (variable: string) => {
+    if (selectedTextarea) {
+      const selectionStartPos = selectedTextarea.selectionStart;
+      const selectionEndPos = selectedTextarea.selectionEnd;
 
-  const onVariableClick = (event: React.MouseEvent<HTMLDivElement>, variable: string) => {
-    event.preventDefault(); // prevents loss of focus from textarea when button clicked
-
-    const textarea = document.activeElement;
-    if (textarea instanceof HTMLTextAreaElement) { // checking is current focused element is textarea
-      const caretStartPos = textarea.selectionStart;
-      const caretEndPos = textarea.selectionEnd;
-      const textToAdd = getFormattedVariable(variable);
-
-      textarea.value = textarea.value.substring(0, caretStartPos) + textToAdd + textarea.value.substring(caretEndPos);
+      // Adding variable between selection
+      selectedTextarea.value = (
+        selectedTextarea.value.substring(0, selectionStartPos) +
+        variable +
+        selectedTextarea.value.substring(selectionEndPos)
+      );
 
       // Returns caret to initial position
-      textarea.selectionStart = caretStartPos + textToAdd.length;
-      textarea.selectionEnd = caretStartPos + textToAdd.length;
+      selectedTextarea.selectionStart = selectionStartPos + variable.length;
+      selectedTextarea.selectionEnd = selectionStartPos + variable.length;
 
-      // Corner case when first row of textarea almost filled and then variable added
-      textarea.style.height = textarea.scrollHeight + 'px';
+      // Dispatch custom event for triggering 'onChange' function of textarea
+      selectedTextarea.dispatchEvent(new CustomEvent('addVariable'));
+    } else { // if textarea has not been selected yet
+      setRootSection(prev => ({ ...prev, [BlockPart.First]: (prev[BlockPart.First] ?? '') + variable }));
     }
-  }
+  };
 
   return (
-    <section className={styles.container}>
+    <div className={styles.container}>
       {variablesArr.map((variable, i) => {
         if (variable) {
+          const formattedVariable = `{${variable}}`;
           return (
-            <div key={i} className={styles.variable} onMouseDown={event => onVariableClick(event, variable)}>
-              {getFormattedVariable(variable)}
-            </div>
+            <Button key={i} className={styles.variable} onMouseDown={() => onVariableClick(formattedVariable)}>
+              {formattedVariable}
+            </Button>
           );
         }
         return null;
       })}
-    </section>
+    </div>
   );
 }

@@ -30,6 +30,14 @@
   padding: 0 var(--padding);
 }
 
+.content_textarea_margin_bottom {
+  margin-bottom: var(--gap-between-textareas);
+}
+
+.content_textarea_margin_top {
+  margin-top: var(--gap-between-textareas);
+}
+
 .footer {
   display: flex;
   flex: 0 1 auto; /* to prevent footer scrolling with content */

@@ -1,10 +1,15 @@
 :root {
-  --accent-color-1: #0A66C2;
+  --accent-color-1: #0a66c2;
   --accent-color-2: #0854a0;
 
   --selected-color: #e6f1fc;
 
-  --font-color: #FFFFFF;
+  --font-color: #ffffff;
 
   --border-color: #999999;
+
+  --yellow-color: #ffc000;
+  --green-color: #00850b;
+  --red-color-1: #e24843;
+  --red-color-2: #bd0600;
 }

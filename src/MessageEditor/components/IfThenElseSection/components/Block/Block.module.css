@@ -1,0 +1,27 @@
+.container > div {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.container > div > span {
+  width: 50px;
+  font-weight: 700;
+  text-align: right;
+}
+
+.if_span {
+  color: var(--yellow-color);
+}
+
+.then_span {
+  color: var(--green-color);
+}
+
+.else_span {
+  color: var(--red-color-2);
+}
+
+.middle_part {
+  margin: var(--gap-between-textareas) 0;
+}

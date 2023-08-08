@@ -11,8 +11,8 @@ type Props = {
 export function Modal({ width, height, isVisible, setIsVisible, children }: Props) {
   if (isVisible) {
     return (
-      <div className={styles.container} onClick={() => setIsVisible(false)}>
-        <div className={styles.content} style={{ width, height }} onClick={e => e.stopPropagation()}>
+      <div className={styles.container} onMouseDown={() => setIsVisible(false)}>
+        <div className={styles.content} style={{ width, height }} onMouseDown={e => e.stopPropagation()}>
           {children}
         </div>
       </div>
