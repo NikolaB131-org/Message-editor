@@ -39,9 +39,9 @@ export function Block({ type, data }: Props) {
         {getSpan()}
         <Textarea
           parentBlockPart={BlockPart.First}
-          value={data[BlockPart.First]}
-          placeholder={type === BlockType.If ? 'Variable' : undefined}
           parentBlockType={type}
+          placeholder={type === BlockType.If ? 'Variable' : undefined}
+          value={data[BlockPart.First]}
         />
       </div>
       {data[BlockPart.Middle] && ( // if another section inside this block
@@ -52,7 +52,7 @@ export function Block({ type, data }: Props) {
           </div>
           <div>
             <span></span>
-            <Textarea parentBlockPart={BlockPart.Last} value={data[BlockPart.Last]} parentBlockType={type} />
+            <Textarea parentBlockPart={BlockPart.Last} parentBlockType={type} value={data[BlockPart.Last]} />
           </div>
         </>
       )}

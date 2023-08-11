@@ -5,6 +5,7 @@ import { Button } from '../components/Button';
 import { Textarea } from './components/Textarea';
 import { IfThenElseSection } from './components/IfThenElseSection';
 import { Modal } from '../components/Modal';
+import { MessagePreview } from '../MessagePreview';
 import blockSchemeSvg from '../assets/block-scheme.svg';
 import previewSvg from '../assets/preview.svg';
 import checkMarkSvg from '../assets/check-mark.svg';
@@ -45,6 +46,7 @@ export function MessageEditor({ setIsVisible, arrVarNames, template, callbackSav
     setRootSection,        // used in VariablesList
     sectionsTree,          // used in IfThenElseSection
     getSerializedTemplate, // used here
+    getTemplate,           // used here
     setText,               // used in SectionsTreeContext
     addSection,            // used here
     deleteSection          // used in SectionsTreeContext
@@ -75,6 +77,7 @@ export function MessageEditor({ setIsVisible, arrVarNames, template, callbackSav
             <Button text='IF | THEN | ELSE' imgSrc={blockSchemeSvg} onMouseDown={onIfThenElseClick} />
           </div>
         </header>
+
         <div className={styles.content}>
           <SectionsTreeContext.Provider value={{ setSelectedTextareaData, setText, deleteSection }}>
             <Textarea
@@ -94,13 +97,17 @@ export function MessageEditor({ setIsVisible, arrVarNames, template, callbackSav
             )}
           </SectionsTreeContext.Provider>
         </div>
+
         <footer className={styles.footer}>
           <Button text='Preview' imgSrc={previewSvg} onClick={() => setIsPreviewVisible(true)} />
           <Button text='Save' imgSrc={checkMarkSvg} onClick={() => callbackSave(getSerializedTemplate())} />
           <Button text='Close' imgSrc={crossSvg} onClick={() => setIsVisible(false)} />
         </footer>
       </div>
-      <Modal width='50vw' height='65vh' isVisible={isPreviewVisible} setIsVisible={setIsPreviewVisible} />
+
+      <Modal width='50vw' height='65vh' isVisible={isPreviewVisible} setIsVisible={setIsPreviewVisible}>
+        <MessagePreview arrVarNames={arrVarNames} template={getTemplate()} setIsVisible={setIsPreviewVisible} />
+      </Modal>
     </>
   );
 }

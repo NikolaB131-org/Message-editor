@@ -18,6 +18,6 @@
 }
 
 .variable:hover {
-  background-color: var(--selected-color);
+  background-color: var(--selected-color-1);
   outline-width: 3px;
 }

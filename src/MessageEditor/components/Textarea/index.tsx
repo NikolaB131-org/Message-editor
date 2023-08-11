@@ -7,27 +7,27 @@ import styles from './Textarea.module.css';
 
 type Props = {
   parentBlockPart: Exclude<BlockPart, BlockPart.Middle>;
-  className?: string;
-  value?: string;
-  placeholder?: string;
   parentBlockType?: BlockType;
+  className?: string;
+  placeholder?: string;
+  value?: string;
 };
 
 export function Textarea({
   parentBlockPart,
-  className = '',
-  value,
-  placeholder = 'Some text',
   parentBlockType,
+  className = '',
+  placeholder = 'Some text',
+  value,
 }: Props) {
   const { getCurrentSectionId } = useContext(SectionIdContext);
   const { setText, setSelectedTextareaData } = useContext(SectionsTreeContext);
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const ref = useRef<HTMLTextAreaElement>(null);
 
-  useTextareaAutoResize(textareaRef, value);
+  useTextareaAutoResize(ref, value);
 
   const onChange = () => {
-    const textarea = textareaRef.current;
+    const textarea = ref.current;
     if (textarea) {
       setText(textarea.value, parentBlockPart, parentBlockType, getCurrentSectionId());
     }
@@ -37,24 +37,24 @@ export function Textarea({
     setSelectedTextareaData({
       sectionId: getCurrentSectionId(),
       blockType: parentBlockType,
-      textarea: textareaRef.current ?? undefined,
+      textarea: ref.current ?? undefined,
     });
   };
 
   useEffect(() => {
     // Custom event listener for call onChange when adding variable
-    textareaRef.current?.addEventListener('addVariable', onChange);
+    ref.current?.addEventListener('addVariable', onChange);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <textarea
       className={`${styles.textarea} ${className}`}
-      ref={textareaRef}
+      ref={ref}
+      placeholder={placeholder}
+      value={value}
       onChange={onChange}
       onSelect={onSelect}
-      value={value}
-      placeholder={placeholder}
     ></textarea>
   );
 }

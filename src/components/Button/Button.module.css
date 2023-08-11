@@ -13,20 +13,20 @@
   background-color: var(--accent-color-1);
   border-radius: 12px;
 
-  transition: all 0.2s linear;
+  transition: background-color 0.2s linear;
 }
 
 .container:hover {
   background-color: var(--accent-color-2);
 }
 
+.img {
+  width: 22px;
+  height: 22px;
+}
+
 .text {
   width: max-content;
   font-weight: 500;
   color: var(--font-color);
-}
-
-.img {
-  width: 22px;
-  height: 22px;
 }

@@ -22,6 +22,7 @@
 
 .variables_title {
   margin-bottom: 10px;
+  font-size: 1.125rem;
 }
 
 .content {
@@ -41,7 +42,7 @@
 .footer {
   display: flex;
   flex: 0 1 auto; /* to prevent footer scrolling with content */
-  gap: 20px;
+  gap: var(--gap-between-buttons);
   justify-content: center;
 
   padding: var(--padding);

@@ -1,5 +1,9 @@
 :root {
   --padding: 16px;
 
+  --textarea-padding: 8px;
+  --textarea-border-radius: 8px;
   --gap-between-textareas: 16px;
+
+  --gap-between-buttons: 20px;
 }

@@ -53,6 +53,11 @@ export function useSectionsTree(template: Template | null) {
     return JSON.stringify(template);
   };
 
+  const getTemplate = (): Template => {
+    const template: Template = { availableId, rootSection, sections: sectionsTree };
+    return template;
+  };
+
   const findNode = (id: number, node?: SectionNode): SectionNode | undefined => { // recursive private function
     if (!node) return undefined;
     if (node && node.id === id) return node;
@@ -76,6 +81,7 @@ export function useSectionsTree(template: Template | null) {
           node[blockType][BlockPart.First],
           node[blockType][BlockPart.Last]
         );
+        delete node[blockType][BlockPart.Last]; // delete last text part
       }
     }
 
@@ -164,5 +170,14 @@ export function useSectionsTree(template: Template | null) {
   };
 
 
-  return { rootSection, setRootSection, sectionsTree, getSerializedTemplate, setText, addSection, deleteSection };
+  return {
+    rootSection,
+    setRootSection,
+    sectionsTree,
+    getSerializedTemplate,
+    getTemplate,
+    setText,
+    addSection,
+    deleteSection
+  };
 }

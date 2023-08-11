@@ -4,7 +4,7 @@
   display: block;
 
   width: 100%;
-  padding: var(--textarea-padding);
+  padding: 6px;
 
   border: 1px solid var(--border-color);
   border-radius: var(--textarea-border-radius);

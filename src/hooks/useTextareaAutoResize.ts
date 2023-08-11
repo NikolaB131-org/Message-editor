@@ -1,19 +1,24 @@
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
-export function useTextareaAutoResize(textareaRef: React.RefObject<HTMLTextAreaElement>, value: any) {
+export function useTextareaAutoResize(ref: React.RefObject<HTMLTextAreaElement>, value: any) {
   useEffect(() => {
-    if (textareaRef.current) {
-      textareaRef.current.style.overflow = 'hidden'; // hides scroll
+    if (ref.current) {
+      ref.current.style.overflow = 'hidden'; // hides scrollbar
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, []);
 
+  // Auto resize when value changes
   useEffect(() => {
-    const textarea = textareaRef.current;
+    const textarea = ref.current;
     if (textarea) {
-      // Auto resize when value changes
-      textarea.style.height = '0';
-      textarea.style.height = textarea.scrollHeight + 'px'
+      // requestAnimationFrame for prevent difference in height between scrollHeight and style.height with text gets bigger
+      requestAnimationFrame(() => {
+        // We need add borderWidth * 2 to properly calculate height
+        const borderFullWidth = parseInt(getComputedStyle(textarea).borderWidth) * 2;
+        textarea.style.height = '0';
+        textarea.style.height = textarea.scrollHeight + borderFullWidth + 'px';
+      });
     }
-  }, [textareaRef, value]);
+  }, [ref, value]);
 }

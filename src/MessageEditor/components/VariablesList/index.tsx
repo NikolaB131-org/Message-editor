@@ -1,4 +1,5 @@
-import { BlockPart, RootSection } from '../../../hooks/useSectionsTree';
+import { RootSection, BlockPart } from '../../../hooks/useSectionsTree';
+import { formatVariable } from '../../../utils/formatVariable';
 import { Button } from '../../../components/Button';
 import styles from './VariablesList.module.css';
 
@@ -36,7 +37,7 @@ export function VariablesList({ variablesArr, setRootSection, selectedTextarea }
     <div className={styles.container}>
       {variablesArr.map((variable, i) => {
         if (variable) {
-          const formattedVariable = `{${variable}}`;
+          const formattedVariable = formatVariable(variable);
           return (
             <Button key={i} className={styles.variable} onMouseDown={() => onVariableClick(formattedVariable)}>
               {formattedVariable}

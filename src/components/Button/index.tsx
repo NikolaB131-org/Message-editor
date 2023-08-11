@@ -20,8 +20,8 @@ export function Button({ children, className = '', text, imgSrc, onClick, onMous
     <button className={`${styles.container} ${className}`} onClick={onClick} onMouseDown={onMouseDownEvent}>
       {children ? children : (
         <>
-          <img className={styles.img} src={imgSrc} alt="" />
-          <span className={styles.text}>{text}</span>
+          {imgSrc && <img className={styles.img} src={imgSrc} alt="" />}
+          {text && <span className={styles.text}>{text}</span>}
         </>
       )}
     </button>
