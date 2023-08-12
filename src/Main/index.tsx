@@ -30,7 +30,7 @@ export function Main() {
           <Button text='Message editor' imgSrc={editorSvg} onClick={() => setIsEditorVisible(true)} />
         </div>
       </div>
-      <Modal width='80vw' height='90vh' isVisible={isEditorVisible} setIsVisible={setIsEditorVisible}>
+      <Modal width='70vw' height='90vh' isVisible={isEditorVisible} setIsVisible={setIsEditorVisible}>
         <MessageEditor
           setIsVisible={setIsEditorVisible}
           arrVarNames={editorArrVarNames}
