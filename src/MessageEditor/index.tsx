@@ -105,7 +105,7 @@ export function MessageEditor({ setIsVisible, arrVarNames, template, callbackSav
         </footer>
       </div>
 
-      <Modal width='50vw' height='65vh' isVisible={isPreviewVisible} setIsVisible={setIsPreviewVisible}>
+      <Modal width='40vw' height='70vh' isVisible={isPreviewVisible} setIsVisible={setIsPreviewVisible}>
         <MessagePreview arrVarNames={arrVarNames} template={getTemplate()} setIsVisible={setIsPreviewVisible} />
       </Modal>
     </>

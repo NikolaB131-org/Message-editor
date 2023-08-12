@@ -1,8 +1,11 @@
 import { VariablesObject } from '../MessagePreview';
+import { isEmptyObject } from './isEmptyObject';
 import { formatVariable, unformatVariable } from './formatVariable';
 import { BlockType, BlockPart, SectionNode, Template } from '../hooks/useSectionsTree';
 
 const replaceVariables = (text: string, variables: VariablesObject): string => {
+  if (isEmptyObject(variables)) return text;
+
   const formattedVariables = Object.keys(variables).map(key => formatVariable(key));
   const regex = new RegExp(formattedVariables.join('|'), 'g'); // regex with all variables: firstname|lastname|...
   // Replaces all variables simultaneously
