@@ -154,14 +154,14 @@ export function useSectionsTree(template: Template | null) {
 
 
   const deleteSection = (id: number) => {
-    if (id === START_AVAILABLE_ID) { // if rootSection chosen
+    if (id === START_AVAILABLE_ID) {
       setRootSection(prev => ({ // merge first and last texts
         [BlockPart.First]: mergeParts(prev[BlockPart.First], prev[BlockPart.Last]),
         [BlockPart.Last]: undefined,
       }));
       setSectionsTree(undefined); // clear sections tree
       setAvailableId(START_AVAILABLE_ID); // reset available id
-    } else { // if sectionsTree chosen
+    } else {
       setSectionsTree(prevTree => {
         if (!prevTree) return prevTree; // if prevTree is undefined, exit
         const newSectionsTree = { ...prevTree };

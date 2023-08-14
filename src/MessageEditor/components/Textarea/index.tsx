@@ -42,8 +42,12 @@ export function Textarea({
   };
 
   useEffect(() => {
+    const textarea = ref.current;
     // Custom event listener for call onChange when adding variable (for updating actual tree)
-    ref.current?.addEventListener('addVariable', onChange);
+    textarea?.addEventListener('addVariable', onChange);
+
+    // On section delete, clears selectedTextareaData if selected textarea in section to be deleted
+    return () => setSelectedTextareaData(prev => prev?.textarea === textarea ? undefined : prev);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
