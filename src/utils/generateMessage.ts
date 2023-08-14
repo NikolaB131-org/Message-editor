@@ -25,7 +25,7 @@ const processSection = (values: VariablesObject, section?: SectionNode, ): strin
   let ifBlock = processBlock(BlockType.If, values, section);
   ifBlock = replaceVariables(ifBlock, values); // replace variables in if block
 
-  if (ifBlock) {
+  if (ifBlock) { // if ifBlock is not empty string
     return processBlock(BlockType.Then, values, section);
   } else {
     return processBlock(BlockType.Else, values, section);

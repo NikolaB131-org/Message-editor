@@ -26,9 +26,9 @@ export function VariablesList({ variablesArr, setRootSection, selectedTextarea }
       selectedTextarea.selectionStart = selectionStartPos + variable.length;
       selectedTextarea.selectionEnd = selectionStartPos + variable.length;
 
-      // Dispatch custom event for triggering 'onChange' function of textarea
+      // Dispatch custom event for triggering 'onChange' function of textarea (for updating actual tree)
       selectedTextarea.dispatchEvent(new CustomEvent('addVariable'));
-    } else { // if textarea has not been selected yet
+    } else { // if textarea has not been selected yet, add variable to the end of rootSection
       setRootSection(prev => ({ ...prev, [BlockPart.First]: (prev[BlockPart.First] ?? '') + variable }));
     }
   };
@@ -36,7 +36,7 @@ export function VariablesList({ variablesArr, setRootSection, selectedTextarea }
   return (
     <div className={styles.container}>
       {variablesArr.map((variable, i) => {
-        if (variable) {
+        if (variable) { // if variable is not empty string
           const formattedVariable = formatVariable(variable);
           return (
             <Button key={i} className={styles.variable} onMouseDown={() => onVariableClick(formattedVariable)}>

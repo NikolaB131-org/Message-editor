@@ -9,16 +9,16 @@ type Props = {
   parentBlockPart: Exclude<BlockPart, BlockPart.Middle>;
   parentBlockType?: BlockType;
   className?: string;
-  placeholder?: string;
   value?: string;
+  placeholder?: string;
 };
 
 export function Textarea({
   parentBlockPart,
   parentBlockType,
   className = '',
-  placeholder = 'Some text',
   value,
+  placeholder = 'Some text',
 }: Props) {
   const { getCurrentSectionId } = useContext(SectionIdContext);
   const { setText, setSelectedTextareaData } = useContext(SectionsTreeContext);
@@ -42,17 +42,17 @@ export function Textarea({
   };
 
   useEffect(() => {
-    // Custom event listener for call onChange when adding variable
+    // Custom event listener for call onChange when adding variable (for updating actual tree)
     ref.current?.addEventListener('addVariable', onChange);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <textarea
-      className={`${styles.textarea} ${className}`}
       ref={ref}
-      placeholder={placeholder}
+      className={`${styles.textarea} ${className}`}
       value={value}
+      placeholder={placeholder}
       onChange={onChange}
       onSelect={onSelect}
     ></textarea>

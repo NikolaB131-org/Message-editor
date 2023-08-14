@@ -1,8 +1,8 @@
+import { Template } from '../hooks/useSectionsTree';
 import { useState } from 'react';
 import { Button } from '../components/Button';
 import { Modal } from '../components/Modal';
 import { MessageEditor } from '../MessageEditor';
-import { Template } from '../hooks/useSectionsTree';
 import editorSvg from '../assets/editor.svg';
 import styles from './Main.module.css';
 
@@ -26,9 +26,7 @@ export function Main() {
   return (
     <>
       <div className={styles.container}>
-        <div className={styles.content}>
-          <Button text='Message editor' imgSrc={editorSvg} onClick={() => setIsEditorVisible(true)} />
-        </div>
+        <Button text='Message editor' imgSrc={editorSvg} onClick={() => setIsEditorVisible(true)} />
       </div>
       <Modal width='70vw' height='90vh' isVisible={isEditorVisible} setIsVisible={setIsEditorVisible}>
         <MessageEditor

@@ -29,7 +29,7 @@
   height: var(--close-button-size);
   padding: 4px;
 
-  background-color: white;
+  background-color: #FFF;
   border: 1px solid var(--border-color);
   border-radius: 50%;
 }

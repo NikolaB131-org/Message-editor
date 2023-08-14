@@ -40,7 +40,7 @@
   background-size: 2px 16px;
 }
 
-.if_then_else {
+.blocks {
   display: flex;
   flex-direction: column;
   flex-grow: 1;

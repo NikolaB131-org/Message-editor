@@ -13,21 +13,18 @@ export function Block({ type, data }: Props) {
     let className: string;
     let text: string;
     switch(type) {
-      case BlockType.If: {
+      case BlockType.If:
         className = styles.if_span;
         text = 'IF';
         break;
-      }
-      case BlockType.Then: {
+      case BlockType.Then:
         className = styles.then_span;
         text = 'THEN';
         break;
-      }
-      case BlockType.Else: {
+      case BlockType.Else:
         className = styles.else_span;
         text = 'ELSE';
         break;
-      }
     }
 
     return <span className={className}>{text}</span>;
@@ -40,8 +37,8 @@ export function Block({ type, data }: Props) {
         <Textarea
           parentBlockPart={BlockPart.First}
           parentBlockType={type}
-          placeholder={type === BlockType.If ? 'Variable' : undefined}
           value={data[BlockPart.First]}
+          placeholder={type === BlockType.If ? 'Variable' : undefined}
         />
       </div>
       {data[BlockPart.Middle] && ( // if another section inside this block

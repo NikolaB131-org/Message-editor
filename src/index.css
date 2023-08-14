@@ -17,11 +17,11 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #d4d4d4;
-  border: 3px solid white;
+  background-color: #D4D4D4;
+  border: 3px solid #FFF;
   border-radius: 100px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #bdbdbd;
+  background-color: #BDBDBD;
 }

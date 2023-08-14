@@ -1,7 +1,5 @@
-import { Main } from "./Main";
+import { Main } from './Main';
 
 export function App() {
-  return (
-    <Main />
-  );
+  return <Main />;
 }

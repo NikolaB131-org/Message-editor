@@ -24,9 +24,7 @@ export type VariablesObject = { [key: string]: string };
 
 const getinitialState = (variablesNames: string[]): VariablesObject => {
   const initialState: VariablesObject = {};
-  variablesNames.forEach(name => {
-    initialState[name] = '';
-  });
+  variablesNames.forEach(name => initialState[name] = '');
   return initialState;
 };
 
@@ -34,8 +32,8 @@ export function MessagePreview({ arrVarNames, template, setIsVisible }: Props) {
   const [message, setMessage] = useState('');
   const [variables, setVariables] = useState<VariablesObject>(() => getinitialState(arrVarNames));
 
-  const setVariable = (name: string, value: string) => { // callback called when variable changes
-    const newVariables = Object.assign({}, variables); // shallow state copy
+  const setVariable = (name: string, value: string) => { // callback that called when variable changes
+    const newVariables = { ...variables };
     newVariables[name] = value;
     setVariables(newVariables);
   };
@@ -47,7 +45,7 @@ export function MessagePreview({ arrVarNames, template, setIsVisible }: Props) {
   return (
     <div className={styles.container}>
       <header className={styles.header_container}>
-        <div className={styles.header_invisible_div}></div> {/* need for balance elements in header */}
+        <div className={styles.header_invisible_div} /> {/* need for balance elements in header */}
         <h2 className={styles.header_title}>Message Preview</h2>
         <Button className={styles.header_close_button} onClick={() => setIsVisible(false)}>
           {crossSvg2}
@@ -55,7 +53,7 @@ export function MessagePreview({ arrVarNames, template, setIsVisible }: Props) {
       </header>
 
       <div className={styles.content}>
-        <Textarea className={styles.message_textarea} readOnly value={message} />
+        <Textarea className={styles.message_textarea} value={message} readOnly />
         <h3 className={styles.variables_title}>Variables</h3>
         <div className={styles.variables}>
           {Object.keys(variables).map((name, i) => (
@@ -65,16 +63,8 @@ export function MessagePreview({ arrVarNames, template, setIsVisible }: Props) {
       </div>
 
       <footer className={styles.footer}>
-        <Button
-          text='Copy to buffer'
-          imgSrc={copySvg}
-          onClick={() => navigator.clipboard.writeText(message)}
-        />
-        <Button
-          text='Close'
-          imgSrc={crossSvg1}
-          onClick={() => setIsVisible(false)}
-        />
+        <Button text='Copy to buffer' imgSrc={copySvg} onClick={() => navigator.clipboard.writeText(message)} />
+        <Button text='Close' imgSrc={crossSvg1} onClick={() => setIsVisible(false)} />
       </footer>
     </div>
   );

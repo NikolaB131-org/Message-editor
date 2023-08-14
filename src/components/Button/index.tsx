@@ -14,7 +14,7 @@ export function Button({ children, className = '', text, imgSrc, onClick, onMous
   const onMouseDownEvent = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault();  // prevents loss of focus from textarea when button clicked
     if (onMouseDown) onMouseDown();
-  }
+  };
 
   return (
     <button className={`${styles.container} ${className}`} onClick={onClick} onMouseDown={onMouseDownEvent}>

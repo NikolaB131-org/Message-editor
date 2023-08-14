@@ -25,14 +25,14 @@ export function IfThenElseSection({ node }: Props) {
   const getCurrentSectionId = () => node.id;
 
   return (
-    <div className={styles.container} id={node.id.toString()}>
+    <div className={styles.container}>
       <div className={styles.close_button_and_stroke}>
         <Button className={styles.close_button} onClick={() => deleteSection(node.id)}>
           {crossSvg}
         </Button>
-        <div className={styles.stroke}></div>
+        <div className={styles.stroke} />
       </div>
-      <div className={styles.if_then_else}>
+      <div className={styles.blocks}>
         <SectionIdContext.Provider value={{ getCurrentSectionId }}>
           <Block type={BlockType.If} data={node[BlockType.If]} />
           <Block type={BlockType.Then} data={node.thenBlock} />

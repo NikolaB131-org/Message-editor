@@ -4,22 +4,22 @@ import styles from './Textarea.module.css';
 
 type Props = {
   className?: string;
-  readOnly?: boolean;
   value?: string;
+  readOnly?: boolean;
   onChange?: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
 };
 
-export function Textarea({ className = '', readOnly, value, onChange }: Props) {
+export function Textarea({ className = '', value, readOnly, onChange }: Props) {
   const ref = useRef<HTMLTextAreaElement>(null);
 
   useTextareaAutoResize(ref, value);
 
   return (
     <textarea
-      className={`${styles.textarea} ${className}`}
       ref={ref}
-      readOnly={readOnly}
+      className={`${styles.textarea} ${className}`}
       value={value}
+      readOnly={readOnly}
       onChange={onChange}
     ></textarea>
   );
