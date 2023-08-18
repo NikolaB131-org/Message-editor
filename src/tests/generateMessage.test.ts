@@ -88,7 +88,7 @@ jakelennard911@gmail.com`;
   });
 
 
-  describe('Complex template', () => {
+  describe('Complex template with nested sections', () => {
     let template: Template;
     let variables: VariablesObject;
 
@@ -183,6 +183,104 @@ I dont know anything about you :)
 
 Best regards,
 Jake`;
+
+      expect(generateMessage(template, variables)).toBe(expectedMessage);
+    });
+  });
+
+
+  describe('Complex template with parallel sections', () => {
+    let template: Template;
+    let variables: VariablesObject;
+
+    beforeEach(() => { // resets to default state before each test
+      template = {
+        availableId: 4,
+        rootSection: [
+          'Hello {firstname},\n\nI am hoping to expand my network by connecting with people ',
+          {
+            id: 1,
+            ifBlock: ['{company}'],
+            thenBlock: ['who work at {company}'],
+            elseBlock: ['who work at your company'],
+          },
+          '',
+          {
+            id: 2,
+            ifBlock: ['{position}'],
+            thenBlock: [' as a {position}.'],
+            elseBlock: ['.']
+          },
+          "\n\nIt would've been great to connect!\n\nBest regards,\nNick",
+        ],
+      };
+
+      variables = {
+        firstname: 'John',
+        company: 'Skype',
+        position: 'Sales Manager',
+      };
+    });
+
+
+    test('With all variables', () => {
+      const expectedMessage = `Hello John,
+
+I am hoping to expand my network by connecting with people who work at Skype as a Sales Manager.
+
+It would've been great to connect!
+
+Best regards,
+Nick`;
+
+      expect(generateMessage(template, variables)).toBe(expectedMessage);
+    });
+
+
+    test('Without {position} variable', () => {
+      variables.position = '';
+
+      const expectedMessage = `Hello John,
+
+I am hoping to expand my network by connecting with people who work at Skype.
+
+It would've been great to connect!
+
+Best regards,
+Nick`;
+
+      expect(generateMessage(template, variables)).toBe(expectedMessage);
+    });
+
+
+    test('Without {company} variable', () => {
+      variables.company = '';
+
+      const expectedMessage = `Hello John,
+
+I am hoping to expand my network by connecting with people who work at your company as a Sales Manager.
+
+It would've been great to connect!
+
+Best regards,
+Nick`;
+
+      expect(generateMessage(template, variables)).toBe(expectedMessage);
+    });
+
+
+    test('Without {company} and {position} variables', () => {
+      variables.company = '';
+      variables.position = '';
+
+      const expectedMessage = `Hello John,
+
+I am hoping to expand my network by connecting with people who work at your company.
+
+It would've been great to connect!
+
+Best regards,
+Nick`;
 
       expect(generateMessage(template, variables)).toBe(expectedMessage);
     });
