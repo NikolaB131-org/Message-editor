@@ -33,6 +33,6 @@ const processSection = (values: VariablesObject, section: SectionNode): string =
 };
 
 export function generateMessage(template: Template, values: VariablesObject): string {
-  const message = processBlock(template.rootSection, values);
+  const message = processBlock(template.rootBlock, values);
   return replaceVariables(message, values);
 }

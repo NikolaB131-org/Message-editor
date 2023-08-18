@@ -44,7 +44,7 @@ export function MessageEditor({ setIsVisible, arrVarNames, template, callbackSav
   const [selectedTextareaData, setSelectedTextareaData] = useState<SelectedTextareaData>();
 
   const {
-    rootSection,           // used here
+    rootBlock,             // used here
     getSerializedTemplate, // used here
     getTemplate,           // used here
     setText,               // used in SectionsTreeContext
@@ -80,7 +80,7 @@ export function MessageEditor({ setIsVisible, arrVarNames, template, callbackSav
         <div className={styles.content_container}>
           <div className={styles.content}>
             <SectionsTreeContext.Provider value={{ setSelectedTextareaData, setText, deleteSection }}>
-              {rootSection.map((part, i) => {
+              {rootBlock.map((part, i) => {
                 if (isSectionNode(part)) {
                   return <IfThenElseSection key={i} node={part} />;
                 } else {

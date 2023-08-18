@@ -19,7 +19,7 @@ export type BlockNode = (SectionNode | string)[];
 
 export type Template = {
   availableId: number;
-  rootSection: BlockNode;
+  rootBlock: BlockNode;
 };
 
 const getFirstSubstring = (textarea: HTMLTextAreaElement) => textarea.value.substring(0, textarea.selectionStart);
@@ -30,14 +30,14 @@ const START_AVAILABLE_ID = 1;
 export function useSectionsTree(template: Template | null) {
   // ID for next new section node
   const [availableId, setAvailableId] = useState<Template['availableId']>(template?.availableId ?? START_AVAILABLE_ID);
-  const [rootSection, setRootSection] = useState<Template['rootSection']>(template?.rootSection ?? ['']);
+  const [rootBlock, setRootBlock] = useState<Template['rootBlock']>(template?.rootBlock ?? ['']);
 
   const getSerializedTemplate = (): string => {
-    const template: Template = { availableId, rootSection };
+    const template: Template = { availableId, rootBlock };
     return JSON.stringify(template);
   };
 
-  const getTemplate = (): Template => ({ availableId, rootSection });
+  const getTemplate = (): Template => ({ availableId, rootBlock });
 
   const findNode = (id: number, node: SectionNode): SectionNode | null => { // recursive private function
     if (node.id === id) return node;
@@ -77,7 +77,7 @@ export function useSectionsTree(template: Template | null) {
     sectionId?: number,
     parentBlockType?: BlockType,
   ) => {
-    setRootSection(prev => {
+    setRootBlock(prev => {
       const newRoot: BlockNode = JSON.parse(JSON.stringify(prev)); // deep clone
 
       if (sectionId && parentBlockType) {
@@ -106,7 +106,7 @@ export function useSectionsTree(template: Template | null) {
       const newText = getFirstSubstring(textarea) + variable + getSecondSubsting(textarea);
       setText(newText, parentPositionIndex, sectionId, parentBlockType);
     } else {
-      setText(rootSection[0] + variable, 0);
+      setText(rootBlock[0] + variable, 0);
     }
   };
 
@@ -119,7 +119,7 @@ export function useSectionsTree(template: Template | null) {
       elseBlock: [],
     };
 
-    setRootSection(prev => {
+    setRootBlock(prev => {
       const newRoot: BlockNode = JSON.parse(JSON.stringify(prev)); // deep clone
 
       if (sectionId && parentBlockType) {
@@ -151,7 +151,7 @@ export function useSectionsTree(template: Template | null) {
 
 
   const deleteSection = (id: number) => {
-    setRootSection(prev => {
+    setRootBlock(prev => {
       const newRoot: BlockNode = JSON.parse(JSON.stringify(prev)); // deep clone
       deleteNode(id, newRoot); // deletes in place
       if (newRoot.length === 1) { // if length = 1, then there is no sections
@@ -162,7 +162,7 @@ export function useSectionsTree(template: Template | null) {
   };
 
   return {
-    rootSection,
+    rootBlock,
     getSerializedTemplate,
     getTemplate,
     setText,

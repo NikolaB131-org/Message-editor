@@ -10,7 +10,7 @@ describe('generateMessage', () => {
     beforeEach(() => { // resets to default state before each test
       template = {
         availableId: 3,
-        rootSection: [
+        rootBlock: [
           'Hello {firstname}!\n\nI just went through your profile and I would love to join your network!\n',
           {
             id: 1,
@@ -95,7 +95,7 @@ jakelennard911@gmail.com`;
     beforeEach(() => { // resets to default state before each test
       template = {
         availableId: 4,
-        rootSection: [
+        rootBlock: [
           'Hello {firstname}!\n\n',
           {
             id: 1,
@@ -196,7 +196,7 @@ Jake`;
     beforeEach(() => { // resets to default state before each test
       template = {
         availableId: 4,
-        rootSection: [
+        rootBlock: [
           'Hello {firstname},\n\nI am hoping to expand my network by connecting with people ',
           {
             id: 1,
@@ -291,7 +291,7 @@ Nick`;
     test('Empty value of variable', () => {
       const template: Template = {
         availableId: 1,
-        rootSection: ['You are {firstname}', '!'],
+        rootBlock: ['You are {firstname}', '!'],
       };
       const variables: VariablesObject = {
         firstname: '',
@@ -306,7 +306,7 @@ Nick`;
     test('Name of variable differs from default variable names', () => {
       const template: Template = {
         availableId: 1,
-        rootSection: ['Your salary is {salary}', '.'],
+        rootBlock: ['Your salary is {salary}', '.'],
       };
       const variables: VariablesObject = {
         salary: '5000',
@@ -321,7 +321,7 @@ Nick`;
     test('Excess variables dont affect anythig', () => {
       const template: Template = {
         availableId: 1,
-        rootSection: ['Hello {firstname}', '!'],
+        rootBlock: ['Hello {firstname}', '!'],
       };
       const variables: VariablesObject = {
         firstname: 'Nick',
@@ -338,7 +338,7 @@ Nick`;
     test('Missing variables acts like text', () => {
       const template: Template = {
         availableId: 1,
-        rootSection: ['Hello {firstname}', '!'],
+        rootBlock: ['Hello {firstname}', '!'],
       };
       const variables: VariablesObject = {};
 
@@ -351,7 +351,7 @@ Nick`;
     test('Symbols acts like text', () => {
       const template: Template = {
         availableId: 1,
-        rootSection: ['Hello {firstname} ', '7+1=8}{(312){321},.'],
+        rootBlock: ['Hello {firstname} ', '7+1=8}{(312){321},.'],
       };
       const variables: VariablesObject = {
         firstname: 'Nick',
@@ -366,7 +366,7 @@ Nick`;
     test('Outer curly braces acts like text', () => {
       const template: Template = {
         availableId: 1,
-        rootSection: ['Hello {first{salary}name} ', '!'],
+        rootBlock: ['Hello {first{salary}name} ', '!'],
       };
       const variables: VariablesObject = {
         firstname: 'Nick',
@@ -382,7 +382,7 @@ Nick`;
     test('Curly braces in variable acts like text', () => {
       const template: Template = {
         availableId: 1,
-        rootSection: ['Hello {firstname}', '!'],
+        rootBlock: ['Hello {firstname}', '!'],
       };
       const variables: VariablesObject = {
         firstname: '{Nick}',
