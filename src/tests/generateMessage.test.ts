@@ -10,25 +10,25 @@ describe('generateMessage', () => {
     beforeEach(() => { // resets to default state before each test
       template = {
         availableId: 3,
-        rootSection: {
-          firstPart: 'Hello {firstname}!\n\nI just went through your profile and I would love to join your network!\n',
-          lastPart: '\n\nJake\nSoftware Developer\njakelennard911@gmail.com',
-        },
-        sections: {
-          id: 1,
-          ifBlock: { firstPart:'{company}' },
-          thenBlock: {
-            firstPart: 'I know you work at {company}',
-            middlePart: {
-              id: 2,
-              ifBlock: { firstPart: '{position}' },
-              thenBlock: { firstPart: ' as {position}.' },
-              elseBlock: { firstPart: ', but what is your role?' },
-            },
-            lastPart: ' :)',
+        rootSection: [
+          'Hello {firstname}!\n\nI just went through your profile and I would love to join your network!\n',
+          {
+            id: 1,
+            ifBlock: ['{company}'],
+            thenBlock: [
+              'I know you work at {company}',
+              {
+                id: 2,
+                ifBlock: ['{position}'],
+                thenBlock: [' as {position}.'],
+                elseBlock: [', but what is your role?'],
+              },
+              ' :)',
+            ],
+            elseBlock: ['Where do you work at the moment?'],
           },
-          elseBlock: { firstPart: 'Where do you work at the moment?' },
-        },
+          '\n\nJake\nSoftware Developer\njakelennard911@gmail.com',
+        ]
       };
 
       variables = {
@@ -95,31 +95,34 @@ jakelennard911@gmail.com`;
     beforeEach(() => { // resets to default state before each test
       template = {
         availableId: 4,
-        rootSection: {
-          firstPart: 'Hello {firstname}!\n\n',
-          lastPart: '\n\nBest regards,\nJake',
-        },
-        sections: {
-          id: 1,
-          ifBlock: { firstPart: '{company}' },
-          thenBlock: {
-            firstPart: '{company} is good. ',
-            middlePart: {
-              id: 2,
-              ifBlock: { firstPart: '{position}' },
-              thenBlock: { firstPart: 'And you are {position}.' },
-              elseBlock: { firstPart: 'I dont know your position.' },
-            },
+        rootSection: [
+          'Hello {firstname}!\n\n',
+          {
+            id: 1,
+            ifBlock: ['{company}'],
+            thenBlock: [
+              '{company} is good. ',
+              {
+                id: 2,
+                ifBlock: ['{position}'],
+                thenBlock: ['And you are {position}.'],
+                elseBlock: ['I dont know your position.'],
+              },
+              '',
+            ],
+            elseBlock: [
+              '',
+              {
+                id: 3,
+                ifBlock: ['{position}'],
+                thenBlock: ['I dont know much about your company, but you work as {position}'],
+                elseBlock: ['I dont know anything about you :)'],
+              },
+              '',
+            ],
           },
-          elseBlock: {
-            middlePart: {
-              id: 3,
-              ifBlock: { firstPart: '{position}' },
-              thenBlock: { firstPart: 'I dont know much about your company, but you work as {position}' },
-              elseBlock: { firstPart: 'I dont know anything about you :)' },
-            },
-          },
-        },
+          '\n\nBest regards,\nJake',
+        ],
       };
 
       variables = {
@@ -190,7 +193,7 @@ Jake`;
     test('Empty value of variable', () => {
       const template: Template = {
         availableId: 1,
-        rootSection: { firstPart: 'You are {firstname}', lastPart: '!' },
+        rootSection: ['You are {firstname}', '!'],
       };
       const variables: VariablesObject = {
         firstname: '',
@@ -205,7 +208,7 @@ Jake`;
     test('Name of variable differs from default variable names', () => {
       const template: Template = {
         availableId: 1,
-        rootSection: { firstPart: 'Your salary is {salary}', lastPart: '.' },
+        rootSection: ['Your salary is {salary}', '.'],
       };
       const variables: VariablesObject = {
         salary: '5000',
@@ -220,7 +223,7 @@ Jake`;
     test('Excess variables dont affect anythig', () => {
       const template: Template = {
         availableId: 1,
-        rootSection: { firstPart: 'Hello {firstname}', lastPart: '!' },
+        rootSection: ['Hello {firstname}', '!'],
       };
       const variables: VariablesObject = {
         firstname: 'Nick',
@@ -237,7 +240,7 @@ Jake`;
     test('Missing variables acts like text', () => {
       const template: Template = {
         availableId: 1,
-        rootSection: { firstPart: 'Hello {firstname}', lastPart: '!' },
+        rootSection: ['Hello {firstname}', '!'],
       };
       const variables: VariablesObject = {};
 
@@ -250,7 +253,7 @@ Jake`;
     test('Symbols acts like text', () => {
       const template: Template = {
         availableId: 1,
-        rootSection: { firstPart: 'Hello {firstname} ', lastPart: '7+1=8}{(312){321},.' },
+        rootSection: ['Hello {firstname} ', '7+1=8}{(312){321},.'],
       };
       const variables: VariablesObject = {
         firstname: 'Nick',
@@ -265,7 +268,7 @@ Jake`;
     test('Outer curly braces acts like text', () => {
       const template: Template = {
         availableId: 1,
-        rootSection: { firstPart: 'Hello {first{salary}name} ', lastPart: '!' },
+        rootSection: ['Hello {first{salary}name} ', '!'],
       };
       const variables: VariablesObject = {
         firstname: 'Nick',
@@ -281,7 +284,7 @@ Jake`;
     test('Curly braces in variable acts like text', () => {
       const template: Template = {
         availableId: 1,
-        rootSection: { firstPart: 'Hello {firstname}', lastPart: '!' },
+        rootSection: ['Hello {firstname}', '!'],
       };
       const variables: VariablesObject = {
         firstname: '{Nick}',

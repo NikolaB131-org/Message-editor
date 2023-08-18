@@ -1,3 +1,9 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-between-textareas);
+}
+
 .container > div {
   display: flex;
   gap: 10px;
@@ -20,8 +26,4 @@
 
 .else_span {
   color: var(--red-color-2);
-}
-
-.middle_part {
-  margin: var(--gap-between-textareas) 0;
 }

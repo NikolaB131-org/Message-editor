@@ -1,7 +1,8 @@
 import { VariablesObject } from '../MessagePreview';
 import { isEmptyObject } from './isEmptyObject';
 import { formatVariable, unformatVariable } from './formatVariable';
-import { BlockType, BlockPart, SectionNode, Template } from '../hooks/useSectionsTree';
+import { BlockNode, BlockType, SectionNode, Template } from '../hooks/useSectionsTree';
+import { isSectionNode } from './isSectionNode';
 
 const replaceVariables = (text: string, variables: VariablesObject): string => {
   if (isEmptyObject(variables)) return text;
@@ -12,32 +13,26 @@ const replaceVariables = (text: string, variables: VariablesObject): string => {
   return text.replace(regex, match => variables[unformatVariable(match)]);
 };
 
-const processBlock = (blockType: BlockType, values: VariablesObject, section: SectionNode): string => { // recursive
-  const firstPart = section[blockType][BlockPart.First] ?? '';
-  const middlePart = section[blockType][BlockPart.Middle];
-  const lastPart = section[blockType][BlockPart.Last] ?? '';
-  return firstPart + processSection(values, middlePart) + lastPart; // sum all parts together
+const processBlock = (block: BlockNode, values: VariablesObject): string => { // recursive
+  let sum = '';
+  for (const part of block) { // sum all parts together
+    sum += isSectionNode(part) ? processSection(values, part) : part;
+  }
+  return sum;
 };
 
-const processSection = (values: VariablesObject, section?: SectionNode, ): string => { // recursive
-  if (!section) return '';
-
-  let ifBlock = processBlock(BlockType.If, values, section);
+const processSection = (values: VariablesObject, section: SectionNode): string => { // recursive
+  let ifBlock = processBlock(section[BlockType.If], values);
   ifBlock = replaceVariables(ifBlock, values); // replace variables in if block
 
   if (ifBlock) { // if ifBlock is not empty string
-    return processBlock(BlockType.Then, values, section);
+    return processBlock(section[BlockType.Then], values);
   } else {
-    return processBlock(BlockType.Else, values, section);
+    return processBlock(section[BlockType.Else], values);
   }
 };
 
 export function generateMessage(template: Template, values: VariablesObject): string {
-  const message = (
-    (template.rootSection[BlockPart.First] ?? '') +
-    processSection(values, template.sections) +
-    (template.rootSection[BlockPart.Last] ?? '')
-  );
-
+  const message = processBlock(template.rootSection, values);
   return replaceVariables(message, values);
 }

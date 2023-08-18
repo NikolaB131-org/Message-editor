@@ -25,18 +25,16 @@
   font-size: 1.125rem;
 }
 
-.content {
+.content_container {
   overflow-y: auto;
   flex: 1 1 auto;
   padding: 0 var(--padding);
 }
 
-.content_textarea_margin_bottom {
-  margin-bottom: var(--gap-between-textareas);
-}
-
-.content_textarea_margin_top {
-  margin-top: var(--gap-between-textareas);
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-between-textareas);
 }
 
 .footer {

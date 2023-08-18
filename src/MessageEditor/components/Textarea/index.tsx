@@ -1,4 +1,4 @@
-import { BlockPart, BlockType } from '../../../hooks/useSectionsTree';
+import { BlockType } from '../../../hooks/useSectionsTree';
 import { useContext, useRef, useEffect } from 'react';
 import { SectionIdContext } from '../IfThenElseSection';
 import { SectionsTreeContext } from '../..';
@@ -6,17 +6,15 @@ import { useTextareaAutoResize } from '../../../hooks/useTextareaAutoResize';
 import styles from './Textarea.module.css';
 
 type Props = {
-  parentBlockPart: Exclude<BlockPart, BlockPart.Middle>;
+  parentPositionIndex: number;
   parentBlockType?: BlockType;
-  className?: string;
   value?: string;
   placeholder?: string;
 };
 
 export function Textarea({
-  parentBlockPart,
+  parentPositionIndex,
   parentBlockType,
-  className = '',
   value,
   placeholder = 'Some text',
 }: Props) {
@@ -29,23 +27,23 @@ export function Textarea({
   const onChange = () => {
     const textarea = ref.current;
     if (textarea) {
-      setText(textarea.value, parentBlockPart, parentBlockType, getCurrentSectionId());
+      setText(textarea.value, parentPositionIndex, getCurrentSectionId(), parentBlockType);
     }
   };
 
   const onSelect = () => {
-    setSelectedTextareaData({
-      sectionId: getCurrentSectionId(),
-      blockType: parentBlockType,
-      textarea: ref.current ?? undefined,
-    });
+    if (ref.current) {
+      setSelectedTextareaData({
+        textarea: ref.current,
+        parentPositionIndex,
+        sectionId: getCurrentSectionId(),
+        parentBlockType,
+      });
+    }
   };
 
   useEffect(() => {
     const textarea = ref.current;
-    // Custom event listener for call onChange when adding variable (for updating actual tree)
-    textarea?.addEventListener('addVariable', onChange);
-
     // On section delete, clears selectedTextareaData if selected textarea in section to be deleted
     return () => setSelectedTextareaData(prev => prev?.textarea === textarea ? undefined : prev);
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -54,7 +52,7 @@ export function Textarea({
   return (
     <textarea
       ref={ref}
-      className={`${styles.textarea} ${className}`}
+      className={styles.textarea}
       value={value}
       placeholder={placeholder}
       onChange={onChange}

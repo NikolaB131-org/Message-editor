@@ -22,7 +22,7 @@ type Props = {
 
 export type VariablesObject = { [key: string]: string };
 
-const getinitialState = (variablesNames: string[]): VariablesObject => {
+const getInitialState = (variablesNames: string[]): VariablesObject => {
   const initialState: VariablesObject = {};
   variablesNames.forEach(name => initialState[name] = '');
   return initialState;
@@ -30,17 +30,17 @@ const getinitialState = (variablesNames: string[]): VariablesObject => {
 
 export function MessagePreview({ arrVarNames, template, setIsVisible }: Props) {
   const [message, setMessage] = useState('');
-  const [variables, setVariables] = useState<VariablesObject>(() => getinitialState(arrVarNames));
+  const [variables, setVariables] = useState<VariablesObject>(() => getInitialState(arrVarNames));
 
   const setVariable = (name: string, value: string) => { // callback that called when variable changes
-    const newVariables = { ...variables };
+    const newVariables = { ...variables }; // shallow clone
     newVariables[name] = value;
     setVariables(newVariables);
   };
 
   useEffect(() => { // regenerate message every time any variable changes
     setMessage(generateMessage(template, variables));
-  }, [variables, template]);
+  }, [template, variables]);
 
   return (
     <div className={styles.container}>

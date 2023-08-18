@@ -1,4 +1,5 @@
-import { BlockType, BlockNode, BlockPart } from '../../../../../hooks/useSectionsTree';
+import { BlockType, BlockNode } from '../../../../../hooks/useSectionsTree';
+import { isSectionNode } from '../../../../../utils/isSectionNode';
 import { Textarea } from '../../../Textarea';
 import { IfThenElseSection } from '../..';
 import styles from './Block.module.css';
@@ -35,24 +36,33 @@ export function Block({ type, data }: Props) {
       <div>
         {getSpan()}
         <Textarea
-          parentBlockPart={BlockPart.First}
+          parentPositionIndex={0}
           parentBlockType={type}
-          value={data[BlockPart.First]}
+          value={data[0] as string}
           placeholder={type === BlockType.If ? 'Variable' : undefined}
         />
       </div>
-      {data[BlockPart.Middle] && ( // if another section inside this block
-        <>
-          <div className={styles.middle_part}>
-            <span></span>
-            <IfThenElseSection node={data[BlockPart.Middle]} />
-          </div>
-          <div>
-            <span></span>
-            <Textarea parentBlockPart={BlockPart.Last} parentBlockType={type} value={data[BlockPart.Last]} />
-          </div>
-        </>
-      )}
+      {data.slice(1).map((part, i) => { // skipping first element because its already used
+        if (isSectionNode(part)) {
+          return (
+            <div key={i}>
+              <span></span>
+              <IfThenElseSection node={part} />
+            </div>
+          );
+        } else {
+          return (
+            <div key={i}>
+              <span></span>
+              <Textarea
+                parentPositionIndex={i + 1} // i + 1 because we skipped first element
+                parentBlockType={type}
+                value={part}
+              />
+            </div>
+          );
+        }
+      })}
     </div>
   );
 }

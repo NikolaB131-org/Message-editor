@@ -4,6 +4,7 @@
   display: block;
 
   width: 100%;
+  min-width: 200px;
   padding: var(--textarea-padding);
 
   border: 1px solid var(--border-color);

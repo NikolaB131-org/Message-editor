@@ -1,4 +1,5 @@
-import { useSectionsTree, Template, BlockType, BlockPart } from '../hooks/useSectionsTree';
+import { useSectionsTree, Template, BlockType } from '../hooks/useSectionsTree';
+import { isSectionNode } from '../utils/isSectionNode';
 import { createContext, useState } from 'react';
 import { VariablesList } from './components/VariablesList';
 import { Button } from '../components/Button';
@@ -25,9 +26,10 @@ const defaultContextState: SectionsTreeContextType = {
 export const SectionsTreeContext = createContext<SectionsTreeContextType>(defaultContextState);
 
 export type SelectedTextareaData = {
+  textarea: HTMLTextAreaElement;
+  parentPositionIndex: number;
   sectionId?: number;
-  blockType?: BlockType;
-  textarea?: HTMLTextAreaElement;
+  parentBlockType?: BlockType;
 };
 
 type Props = {
@@ -43,21 +45,22 @@ export function MessageEditor({ setIsVisible, arrVarNames, template, callbackSav
 
   const {
     rootSection,           // used here
-    setRootSection,        // used in VariablesList
-    sectionsTree,          // used in IfThenElseSection
     getSerializedTemplate, // used here
     getTemplate,           // used here
     setText,               // used in SectionsTreeContext
+    addVariable,           // used here
     addSection,            // used here
     deleteSection          // used in SectionsTreeContext
   } = useSectionsTree(template);
 
+  const onAddVariableClick = (variable: string) => {
+    addVariable(variable, selectedTextareaData);
+  };
+
   const onIfThenElseClick = () => {
-    addSection({
-      sectionId: selectedTextareaData?.sectionId,
-      blockType: selectedTextareaData?.blockType,
-      textarea: selectedTextareaData?.textarea,
-    });
+    if (selectedTextareaData) {
+      addSection(selectedTextareaData);
+    }
   };
 
   return (
@@ -68,34 +71,24 @@ export function MessageEditor({ setIsVisible, arrVarNames, template, callbackSav
           <div className={styles.header_content}>
             <section>
               <h3 className={styles.variables_title}>Variables</h3>
-              <VariablesList
-                variablesArr={arrVarNames}
-                setRootSection={setRootSection}
-                selectedTextarea={selectedTextareaData?.textarea}
-              />
+              <VariablesList variablesArr={arrVarNames} addVariable={onAddVariableClick} />
             </section>
             <Button text='IF | THEN | ELSE' imgSrc={blockSchemeSvg} onMouseDown={onIfThenElseClick} />
           </div>
         </header>
 
-        <div className={styles.content}>
-          <SectionsTreeContext.Provider value={{ setSelectedTextareaData, setText, deleteSection }}>
-            <Textarea
-              parentBlockPart={BlockPart.First}
-              className={styles.content_textarea_margin_bottom}
-              value={rootSection[BlockPart.First]}
-            />
-            {sectionsTree && (
-              <>
-                <IfThenElseSection node={sectionsTree} />
-                <Textarea
-                  parentBlockPart={BlockPart.Last}
-                  className={styles.content_textarea_margin_top}
-                  value={rootSection[BlockPart.Last]}
-                />
-              </>
-            )}
-          </SectionsTreeContext.Provider>
+        <div className={styles.content_container}>
+          <div className={styles.content}>
+            <SectionsTreeContext.Provider value={{ setSelectedTextareaData, setText, deleteSection }}>
+              {rootSection.map((part, i) => {
+                if (isSectionNode(part)) {
+                  return <IfThenElseSection key={i} node={part} />;
+                } else {
+                  return <Textarea key={i} parentPositionIndex={i} value={part} />;
+                }
+              })}
+            </SectionsTreeContext.Provider>
+          </div>
         </div>
 
         <footer className={styles.footer}>
