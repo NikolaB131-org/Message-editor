@@ -1,0 +1,49 @@
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - 'main'
+
+env:
+  path: /var/www/message-editor.nikolab131.xyz
+  tempPath: /var/tmp/message-editor.nikolab131.xyz
+
+jobs:
+  build:
+    name: 'Build'
+    runs-on: self-hosted
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+      - name: Tests
+        run: npm test
+      - name: Build
+        run: npm run build
+      - name: Clean previous files
+        run : rm -rf ${{env.tempPath}}
+      - name: Copy
+        run: |
+          mkdir -p ${{env.tempPath}}
+          cp -r build/. ${{env.tempPath}}
+
+  deploy:
+    needs: build
+    name: 'Deploy'
+    runs-on: self-hosted
+
+    steps:
+      - name: Clean previous files
+        run: rm -rf ${{env.path}}
+      - name: Copy
+        run: |
+          mkdir -p ${{env.path}}
+          cp -r ${{env.tempPath}}/. ${{env.path}}
