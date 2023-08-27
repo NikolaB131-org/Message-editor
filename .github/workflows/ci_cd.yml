@@ -27,7 +27,9 @@ jobs:
       - name: Tests
         run: npm test
       - name: Build
-        run: npm run build
+        run: |
+          cp -r /var/environments/message-editor.nikolab131.xyz/. .
+          npm run build
       - name: Clean previous files
         run : rm -rf ${{env.tempPath}}
       - name: Copy
