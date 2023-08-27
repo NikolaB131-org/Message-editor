@@ -8,7 +8,8 @@ const replaceVariables = (text: string, variables: VariablesObject): string => {
   if (isEmptyObject(variables)) return text;
 
   const formattedVariables = Object.keys(variables).map(key => formatVariable(key));
-  const regex = new RegExp(formattedVariables.join('|'), 'g'); // regex with all variables: firstname|lastname|...
+   // Regex with all variables: \{firstname\}|\{lastname\}|...
+  const regex = new RegExp(formattedVariables.join('|').replaceAll('{', '\\{').replaceAll('}', '\\}'), 'g');
   // Replaces all variables simultaneously
   return text.replace(regex, match => variables[unformatVariable(match)]);
 };
