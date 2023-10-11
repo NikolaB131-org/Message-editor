@@ -45,7 +45,6 @@ You can replace these variables with your own. To do this, specify them as an ar
 - Data is stored in a tree and can be serialized to JSON
 - Tests
 - CI/CD
-- Personal hosting
 
 ## Build with
 
